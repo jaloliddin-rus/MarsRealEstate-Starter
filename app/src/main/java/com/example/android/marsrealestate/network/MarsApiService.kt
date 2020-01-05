@@ -25,7 +25,12 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.Query
 
+enum class MarsApiFilter(val value: String) {
+    SHOW_RENT("rent"),
+    SHOW_BUY("buy"),
+    SHOW_ALL("all") }
 
 private const val BASE_URL = "https://android-kotlin-fun-mars-server.appspot.com"
 
@@ -41,7 +46,7 @@ private val retrofit = Retrofit.Builder()
 
 interface MarsApiService {
     @GET("realestate")
-    fun getProperties():
+    fun getProperties(@Query("filter") type: String):
             Deferred<List<MarsProperty>>
 }
 
